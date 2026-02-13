@@ -56,17 +56,45 @@ class AdminJobController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'category' => 'required|string|max:100',
             'description' => 'required|string',
+            'job_type' => 'required|in:Full-time,Contract,Part-time,Internship',
+            'workplace_type' => 'required|in:Onsite,Hybrid,Remote',
+            'vacancy' => 'required|integer|min:1',
+            'location' => 'required|string',
+            'salary_min' => 'nullable|numeric|min:0',
+            'salary_max' => 'nullable|numeric|gte:salary_min',
+            'gender' => 'required|in:Male,Female,Any',
+            'min_experience' => 'required|integer|min:0',
+            'min_education' => 'required|string',
+            'min_age' => 'nullable|integer|min:17',
+            'max_age' => 'nullable|integer|gte:min_age',
+            'skills' => 'nullable|string', // Comma separated
+            'has_screening_question' => 'boolean',
             'is_active' => 'boolean',
         ]);
 
         Job::create([
-            'title' => $request->title,
-            'slug' => Str::slug($request->title) . '-' . Str::random(5),
-            'description' => $request->description,
-            'is_active' => $request->is_active ?? true,
+            'title' => $validated['title'],
+            'slug' => Str::slug($validated['title']) . '-' . Str::random(5),
+            'category' => $validated['category'],
+            'description' => $validated['description'],
+            'job_type' => $validated['job_type'],
+            'workplace_type' => $validated['workplace_type'],
+            'vacancy' => $validated['vacancy'],
+            'location' => $validated['location'],
+            'salary_min' => $validated['salary_min'],
+            'salary_max' => $validated['salary_max'],
+            'gender' => $validated['gender'],
+            'min_experience' => $validated['min_experience'],
+            'min_education' => $validated['min_education'],
+            'min_age' => $validated['min_age'],
+            'max_age' => $validated['max_age'],
+            'skills' => $validated['skills'],
+            'has_screening_question' => $validated['has_screening_question'] ?? false,
+            'is_active' => $validated['is_active'] ?? true,
         ]);
 
         return redirect()->route('admin.jobs.index')->with('success', 'Job created successfully.');
