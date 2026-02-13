@@ -29,8 +29,18 @@ class CandidateProfileController extends Controller
             'nik' => 'required|numeric|digits:16',
             'full_name' => 'required|string|max:255',
             'phone' => 'required|numeric',
-            'address' => 'required|string',
             'birth_date' => 'required|date',
+            'birth_place' => 'required|string|max:100',
+            'gender' => 'required|in:Male,Female',
+            'religion' => 'required|string|max:50',
+            'address' => 'required|string',
+            'ktp_address' => 'required|string',
+            'height' => 'required|numeric|min:100|max:250',
+            'weight' => 'required|numeric|min:30|max:200',
+            'last_education' => 'required|string',
+            'school_name' => 'required|string|max:150',
+            'major' => 'required|string|max:100',
+            'gpa' => 'required|numeric|min:0|max:4',
             'cv' => 'nullable|file|mimes:pdf|max:2048', // Max 2MB, PDF only
         ]);
 
@@ -41,8 +51,18 @@ class CandidateProfileController extends Controller
         $profile->nik = $request->nik;
         $profile->full_name = $request->full_name;
         $profile->phone = $request->phone;
-        $profile->address = $request->address;
         $profile->birth_date = $request->birth_date;
+        $profile->birth_place = $request->birth_place;
+        $profile->gender = $request->gender;
+        $profile->religion = $request->religion;
+        $profile->address = $request->address;
+        $profile->ktp_address = $request->ktp_address;
+        $profile->height = $request->height;
+        $profile->weight = $request->weight;
+        $profile->last_education = $request->last_education;
+        $profile->school_name = $request->school_name;
+        $profile->major = $request->major;
+        $profile->gpa = $request->gpa;
 
         // 4. Handle Upload CV (Jika ada file baru diupload)
         if ($request->hasFile('cv')) {

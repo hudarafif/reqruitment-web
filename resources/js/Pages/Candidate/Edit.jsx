@@ -7,8 +7,18 @@ export default function Edit({ auth, profile }) {
         nik: profile?.nik || '',
         full_name: profile?.full_name || auth.user.name,
         phone: profile?.phone || '',
-        address: profile?.address || '',
+        birth_place: profile?.birth_place || '',
         birth_date: profile?.birth_date || '',
+        gender: profile?.gender || '',
+        religion: profile?.religion || '',
+        address: profile?.address || '',
+        ktp_address: profile?.ktp_address || '',
+        height: profile?.height || '',
+        weight: profile?.weight || '',
+        last_education: profile?.last_education || '',
+        school_name: profile?.school_name || '',
+        major: profile?.major || '',
+        gpa: profile?.gpa || '',
         cv: null,
     });
 
@@ -27,65 +37,207 @@ export default function Edit({ auth, profile }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                        
-                        <form onSubmit={submit} className="space-y-6 max-w-xl">
-                            {/* NIK */}
-                            <div>
-                                <label className="block font-medium text-sm text-gray-700">NIK (Nomor Induk Kependudukan)</label>
-                                <input
-                                    type="text"
-                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                    value={data.nik}
-                                    onChange={(e) => setData('nik', e.target.value)}
-                                />
-                                {errors.nik && <div className="text-red-500 text-sm mt-1">{errors.nik}</div>}
+
+                        <form onSubmit={submit} className="space-y-6 max-w-4xl">
+                            {/* Personal Info Section */}
+                            <div className="border-b pb-4 mb-4">
+                                <h3 className="text-lg font-medium text-gray-900 mb-4">Informasi Pribadi</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">NIK (Nomor Induk Kependudukan)</label>
+                                        <input
+                                            type="text"
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.nik}
+                                            onChange={(e) => setData('nik', e.target.value)}
+                                        />
+                                        {errors.nik && <div className="text-red-500 text-sm mt-1">{errors.nik}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Nama Lengkap</label>
+                                        <input
+                                            type="text"
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.full_name}
+                                            onChange={(e) => setData('full_name', e.target.value)}
+                                        />
+                                        {errors.full_name && <div className="text-red-500 text-sm mt-1">{errors.full_name}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Tempat Lahir</label>
+                                        <input
+                                            type="text"
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.birth_place}
+                                            onChange={(e) => setData('birth_place', e.target.value)}
+                                        />
+                                        {errors.birth_place && <div className="text-red-500 text-sm mt-1">{errors.birth_place}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Tanggal Lahir</label>
+                                        <input
+                                            type="date"
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.birth_date}
+                                            onChange={(e) => setData('birth_date', e.target.value)}
+                                        />
+                                        {errors.birth_date && <div className="text-red-500 text-sm mt-1">{errors.birth_date}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Jenis Kelamin</label>
+                                        <select
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.gender}
+                                            onChange={(e) => setData('gender', e.target.value)}
+                                        >
+                                            <option value="">Pilih Jenis Kelamin</option>
+                                            <option value="Male">Laki-laki</option>
+                                            <option value="Female">Perempuan</option>
+                                        </select>
+                                        {errors.gender && <div className="text-red-500 text-sm mt-1">{errors.gender}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Agama</label>
+                                        <select
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.religion}
+                                            onChange={(e) => setData('religion', e.target.value)}
+                                        >
+                                            <option value="">Pilih Agama</option>
+                                            <option value="Islam">Islam</option>
+                                            <option value="Kristen">Kristen</option>
+                                            <option value="Katolik">Katolik</option>
+                                            <option value="Hindu">Hindu</option>
+                                            <option value="Buddha">Buddha</option>
+                                            <option value="Khonghucu">Khonghucu</option>
+                                            <option value="Lainnya">Lainnya</option>
+                                        </select>
+                                        {errors.religion && <div className="text-red-500 text-sm mt-1">{errors.religion}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Tinggi Badan (cm)</label>
+                                        <input
+                                            type="number"
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.height}
+                                            onChange={(e) => setData('height', e.target.value)}
+                                        />
+                                        {errors.height && <div className="text-red-500 text-sm mt-1">{errors.height}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Berat Badan (kg)</label>
+                                        <input
+                                            type="number"
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.weight}
+                                            onChange={(e) => setData('weight', e.target.value)}
+                                        />
+                                        {errors.weight && <div className="text-red-500 text-sm mt-1">{errors.weight}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">No. WhatsApp / HP</label>
+                                        <input
+                                            type="text"
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.phone}
+                                            onChange={(e) => setData('phone', e.target.value)}
+                                        />
+                                        {errors.phone && <div className="text-red-500 text-sm mt-1">{errors.phone}</div>}
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* Nama Lengkap */}
-                            <div>
-                                <label className="block font-medium text-sm text-gray-700">Nama Lengkap</label>
-                                <input
-                                    type="text"
-                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                    value={data.full_name}
-                                    onChange={(e) => setData('full_name', e.target.value)}
-                                />
-                                {errors.full_name && <div className="text-red-500 text-sm mt-1">{errors.full_name}</div>}
+                            {/* Address Section */}
+                            <div className="border-b pb-4 mb-4">
+                                <h3 className="text-lg font-medium text-gray-900 mb-4">Alamat</h3>
+                                <div className="grid grid-cols-1 gap-6">
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Alamat KTP</label>
+                                        <textarea
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            rows="3"
+                                            value={data.ktp_address}
+                                            onChange={(e) => setData('ktp_address', e.target.value)}
+                                        />
+                                        {errors.ktp_address && <div className="text-red-500 text-sm mt-1">{errors.ktp_address}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Alamat Domisili</label>
+                                        <textarea
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            rows="3"
+                                            value={data.address}
+                                            onChange={(e) => setData('address', e.target.value)}
+                                        />
+                                        {errors.address && <div className="text-red-500 text-sm mt-1">{errors.address}</div>}
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* No HP */}
-                            <div>
-                                <label className="block font-medium text-sm text-gray-700">No. WhatsApp / HP</label>
-                                <input
-                                    type="text"
-                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                    value={data.phone}
-                                    onChange={(e) => setData('phone', e.target.value)}
-                                />
-                                {errors.phone && <div className="text-red-500 text-sm mt-1">{errors.phone}</div>}
-                            </div>
+                            {/* Education Section */}
+                            <div className="border-b pb-4 mb-4">
+                                <h3 className="text-lg font-medium text-gray-900 mb-4">Pendidikan Terakhir</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="md:col-span-2">
+                                        <label className="block font-medium text-sm text-gray-700">Jenjang Pendidikan</label>
+                                        <select
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.last_education}
+                                            onChange={(e) => setData('last_education', e.target.value)}
+                                        >
+                                            <option value="">Pilih Jenjang</option>
+                                            <option value="SMA/SMK">SMA/SMK</option>
+                                            <option value="D3">D3</option>
+                                            <option value="S1">S1</option>
+                                            <option value="S2">S2</option>
+                                            <option value="S3">S3</option>
+                                        </select>
+                                        {errors.last_education && <div className="text-red-500 text-sm mt-1">{errors.last_education}</div>}
+                                    </div>
 
-                            {/* Tanggal Lahir */}
-                            <div>
-                                <label className="block font-medium text-sm text-gray-700">Tanggal Lahir</label>
-                                <input
-                                    type="date"
-                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                    value={data.birth_date}
-                                    onChange={(e) => setData('birth_date', e.target.value)}
-                                />
-                                {errors.birth_date && <div className="text-red-500 text-sm mt-1">{errors.birth_date}</div>}
-                            </div>
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Nama Sekolah / Perguruan Tinggi</label>
+                                        <input
+                                            type="text"
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.school_name}
+                                            onChange={(e) => setData('school_name', e.target.value)}
+                                        />
+                                        {errors.school_name && <div className="text-red-500 text-sm mt-1">{errors.school_name}</div>}
+                                    </div>
 
-                            {/* Alamat */}
-                            <div>
-                                <label className="block font-medium text-sm text-gray-700">Alamat Domisili</label>
-                                <textarea
-                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                    value={data.address}
-                                    onChange={(e) => setData('address', e.target.value)}
-                                />
-                                {errors.address && <div className="text-red-500 text-sm mt-1">{errors.address}</div>}
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Jurusan</label>
+                                        <input
+                                            type="text"
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.major}
+                                            onChange={(e) => setData('major', e.target.value)}
+                                        />
+                                        {errors.major && <div className="text-red-500 text-sm mt-1">{errors.major}</div>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block font-medium text-sm text-gray-700">Nilai Rata-rata / IPK</label>
+                                        <input
+                                            type="number"
+                                            step="0.01"
+                                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                            value={data.gpa}
+                                            onChange={(e) => setData('gpa', e.target.value)}
+                                        />
+                                        {errors.gpa && <div className="text-red-500 text-sm mt-1">{errors.gpa}</div>}
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Upload CV */}

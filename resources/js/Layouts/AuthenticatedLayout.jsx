@@ -19,7 +19,7 @@ export default function AuthenticatedLayout({ header, children }) {
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    Lowongan
                                 </Link>
                             </div>
 
@@ -28,8 +28,15 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
-                                    Dashboard
                                 </NavLink>
+                                {user.role === 'admin' && (
+                                    <NavLink
+                                        href={route('admin.jobs.index')}
+                                        active={route().current('admin.jobs.*')}
+                                    >
+                                        Manage Jobs
+                                    </NavLink>
+                                )}
                             </div>
                         </div>
 
@@ -134,6 +141,14 @@ export default function AuthenticatedLayout({ header, children }) {
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        {user.role === 'admin' && (
+                            <ResponsiveNavLink
+                                href={route('admin.jobs.index')}
+                                active={route().current('admin.jobs.*')}
+                            >
+                                Manage Jobs
+                            </ResponsiveNavLink>
+                        )}
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">
