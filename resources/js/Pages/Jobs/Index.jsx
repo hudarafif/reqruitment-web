@@ -156,12 +156,25 @@ export default function JobIndex({ auth, jobs, appliedJobIds }) {
             <Modal show={isModalOpen} onClose={closeModal} maxWidth="2xl">
                 {selectedJob && (
                     <div className="p-6">
-                        <div className="flex justify-between items-start mb-4">
+                        {/* Header */}
+                        <div className="flex justify-between items-start mb-6">
                             <div>
                                 <h2 className="text-2xl font-bold text-gray-900">{selectedJob.title}</h2>
-                                <span className="inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                                    Full Time
-                                </span>
+                                <div className="flex flex-wrap gap-2 mt-2">
+                                    <span className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-blue-100 text-blue-800">
+                                        {selectedJob.job_type || 'Full Time'}
+                                    </span>
+                                    {selectedJob.workplace_type && (
+                                        <span className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-purple-100 text-purple-800">
+                                            {selectedJob.workplace_type}
+                                        </span>
+                                    )}
+                                    {selectedJob.category && (
+                                        <span className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
+                                            {selectedJob.category}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                             <button onClick={closeModal} className="text-gray-400 hover:text-gray-500 transition">
                                 <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,21 +183,101 @@ export default function JobIndex({ auth, jobs, appliedJobIds }) {
                             </button>
                         </div>
 
-                        <div className="prose prose-sm max-w-none text-gray-600 mb-8 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
-                            <div className="whitespace-pre-line leading-relaxed">
-                                {selectedJob.description}
+                        <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+                            {/* Description */}
+                            <div>
+                                <h3 className="text-lg font-semibold text-gray-900 mb-2">Deskripsi Pekerjaan</h3>
+                                <div className="prose prose-sm max-w-none text-gray-600 whitespace-pre-line leading-relaxed">
+                                    {selectedJob.description}
+                                </div>
                             </div>
+
+                            {/* Info Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <div>
+                                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center">
+                                        <svg className="w-4 h-4 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        Info Lowongan
+                                    </h4>
+                                    <ul className="text-sm text-gray-600 space-y-2">
+                                        <li className="flex justify-between">
+                                            <span className="text-gray-500">Lokasi:</span>
+                                            <span className="font-medium text-gray-900 text-right">{selectedJob.location || '-'}</span>
+                                        </li>
+                                        {/* <li className="flex justify-between">
+                                            <span className="text-gray-500">Kuota:</span>
+                                            <span className="font-medium text-gray-900">{selectedJob.vacancy} Orang</span>
+                                        </li> */}
+                                        {selectedJob.salary_min && (
+                                            <li className="flex justify-between">
+                                                <span className="text-gray-500">Gaji:</span>
+                                                <span className="font-medium text-green-600">
+                                                    Rp {parseInt(selectedJob.salary_min).toLocaleString('id-ID')}
+                                                    {selectedJob.salary_max ? ` - ${parseInt(selectedJob.salary_max).toLocaleString('id-ID')}` : '+'}
+                                                </span>
+                                            </li>
+                                        )}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center">
+                                        <svg className="w-4 h-4 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        Kualifikasi
+                                    </h4>
+                                    <ul className="text-sm text-gray-600 space-y-2">
+                                        <li className="flex justify-between">
+                                            <span className="text-gray-500">Pendidikan:</span>
+                                            <span className="font-medium text-gray-900">{selectedJob.min_education || 'Semua Jenjang'}</span>
+                                        </li>
+                                        <li className="flex justify-between">
+                                            <span className="text-gray-500">Pengalaman:</span>
+                                            <span className="font-medium text-gray-900">{selectedJob.min_experience} Tahun</span>
+                                        </li>
+                                        <li className="flex justify-between">
+                                            <span className="text-gray-500">Gender:</span>
+                                            <span className="font-medium text-gray-900">
+                                                {selectedJob.gender === 'Male' ? 'Laki-laki' : selectedJob.gender === 'Female' ? 'Perempuan' : 'L/P'}
+                                            </span>
+                                        </li>
+                                        {(selectedJob.min_age || selectedJob.max_age) && (
+                                            <li className="flex justify-between">
+                                                <span className="text-gray-500">Usia:</span>
+                                                <span className="font-medium text-gray-900">
+                                                    {selectedJob.min_age || 0} - {selectedJob.max_age || '45+'} Tahun
+                                                </span>
+                                            </li>
+                                        )}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Skills */}
+                            {selectedJob.skills && (
+                                <div>
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Keahlian Dibutuhkan</h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {selectedJob.skills.split(',').map((skill, index) => (
+                                            <span key={index} className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-indigo-50 text-indigo-700 border border-indigo-100">
+                                                {skill.trim()}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
-                        <div className="flex justify-end space-x-3 pt-4 border-t border-gray-100">
+                        <div className="flex justify-end space-x-3 pt-6 border-t border-gray-100 mt-6">
                             <SecondaryButton onClick={closeModal}>
                                 Tutup
                             </SecondaryButton>
 
                             {auth.user ? (
                                 isApplied(selectedJob.id) ? (
-                                    <PrimaryButton disabled className="opacity-50 cursor-not-allowed bg-green-600 hover:bg-green-600 focus:bg-green-600 active:bg-green-600">
-                                        Sudah Dilamar
+                                    <PrimaryButton disabled className="opacity-50 cursor-not-allowed bg-green-600 hover:bg-green-600 focus:bg-green-600 active:bg-green-600 border-none ring-0">
+                                        <span className="flex items-center">
+                                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                                            Sudah Dilamar
+                                        </span>
                                     </PrimaryButton>
                                 ) : (
                                     <PrimaryButton onClick={() => handleApply(selectedJob.id)}>
@@ -192,7 +285,7 @@ export default function JobIndex({ auth, jobs, appliedJobIds }) {
                                     </PrimaryButton>
                                 )
                             ) : (
-                                <Link href={route('login')} className="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                <Link href={route('login')} className="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                     Login untuk Melamar
                                 </Link>
                             )}
